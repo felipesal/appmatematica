@@ -8,4 +8,8 @@ import com.felipesalles.appmatematica.domain.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer>{
 
+	User findByUsername(String username);
+
+	User findByEmail(String email);
+
 }
