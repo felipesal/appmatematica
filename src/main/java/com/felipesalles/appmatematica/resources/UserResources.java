@@ -2,6 +2,8 @@ package com.felipesalles.appmatematica.resources;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,9 +26,17 @@ import com.felipesalles.appmatematica.services.UserService;
 @RequestMapping(value="/users")
 public class UserResources {
 	
-	@Autowired
+	
+	
 	private UserService serv;
 	
+	
+	@Autowired
+	public UserResources(UserService serv) {
+		super();
+		this.serv = serv;
+	}
+
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
 	public List<UserDTO> listarTodos() {
@@ -42,7 +53,7 @@ public class UserResources {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public User insert(@RequestBody UserNewDTO userDto) {
+	public User insert(@RequestBody @Valid UserNewDTO userDto) {
 		
 		return serv.insert(userDto);
 	}

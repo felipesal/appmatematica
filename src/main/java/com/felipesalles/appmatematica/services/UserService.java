@@ -17,9 +17,10 @@ import com.felipesalles.appmatematica.services.exceptions.ObjectNotFoundExceptio
 @Service
 public class UserService {
 
-	@Autowired
+	
 	private UserRepository repo;
-
+	
+	@Autowired
 	public UserService(UserRepository repo) {
 		super();
 		this.repo = repo;
