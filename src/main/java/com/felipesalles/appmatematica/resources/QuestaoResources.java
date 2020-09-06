@@ -44,6 +44,11 @@ public class QuestaoResources {
 		return qservice.insert(novaQuestao);
 	}
 	
-	
+	@PostMapping("/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public String responder(@PathVariable Integer id, @RequestBody String resposta) {
+		
+		return qservice.responder(id, resposta);
+	}
 	
 }

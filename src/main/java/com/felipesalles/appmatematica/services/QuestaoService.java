@@ -1,6 +1,7 @@
 package com.felipesalles.appmatematica.services;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -47,6 +48,50 @@ public class QuestaoService {
 		
 		
 		return q;
+	}
+
+	public String responder(Integer id, String resposta) {
+		
+		Questao q = findOne(id);
+		
+		Map<String, Boolean> mapAlternativas = q.getMapAlternativas();
+		
+		String msg = null;
+		
+		if(verificaResposta(mapAlternativas, resposta)) {
+			msg = "Parabéns! Resposta correta";
+		}
+		
+		else {
+			msg = "Resposta incorreta, mas não desista. Você é capaz.";
+		}
+		
+		return msg;
+		
+	}
+	
+	private Boolean verificaResposta(Map<String, Boolean> mapAlternativas, String resposta) {
+		Boolean status = false;
+		for(Map.Entry<String, Boolean> entrada : mapAlternativas.entrySet()) {
+			
+			String key = entrada.getKey();
+			Boolean value = entrada.getValue();
+			
+			if(key.equals(resposta)) {
+			if(value) {
+				status = true;
+			}
+			
+			else {
+				status = false;
+			}
+			
+			}
+			
+			
+		}
+		
+		return status;
 	}
 
 	
