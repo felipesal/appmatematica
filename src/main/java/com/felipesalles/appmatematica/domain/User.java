@@ -1,7 +1,11 @@
 package com.felipesalles.appmatematica.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,6 +31,9 @@ public class User implements Serializable{
 	
 	private Integer pontuacao;
 	
+	@ElementCollection
+	@CollectionTable(name="QUESTOES_CORRETAS")
+	private Set<Questao> questoesCorretas = new HashSet<>();
 	
 
 	public User() {
@@ -93,6 +100,23 @@ public class User implements Serializable{
 
 	public void setPontuacao(Integer pontuacao) {
 		this.pontuacao = pontuacao;
+	}
+	
+	
+
+	public Set<Questao> getQuestoesCorretas() {
+		return questoesCorretas;
+	}
+
+
+
+	public void setQuestoesCorretas(Set<Questao> questoesCorretas) {
+		this.questoesCorretas = questoesCorretas;
+	}
+
+
+	public void addQuestaoCorreta(Questao q) {
+		questoesCorretas.add(q);
 	}
 
 	@Override

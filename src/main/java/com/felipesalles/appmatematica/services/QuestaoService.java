@@ -59,24 +59,41 @@ public class QuestaoService {
 		Questao q = findOne(id);
 		
 		User user = users.findById(resposta.getUser().getId()).get();
+		String msg = null;
+		if(userNaoRespondeu(user, q)) {
 
 		Map<String, Boolean> mapAlternativas = q.getMapAlternativas();
 
-		String msg = null;
+		
 
 		if (verificaResposta(mapAlternativas, resposta.getResposta())) {
 			msg = "Parabéns! Resposta correta";
 			user.setPontuacao(user.getPontuacao() +10 );
-			
+			user.addQuestaoCorreta(q);
 			users.save(user);
 		}
 
 		else {
 			msg = "Resposta incorreta, mas não desista. Você é capaz.";
 		}
+		}
+		
+		else {
+			msg = "Você já respondeu essa pergunta";
+		}
 
 		return msg;
 
+	}
+
+	private boolean userNaoRespondeu(User user, Questao questao) {
+		if(user.getQuestoesCorretas().contains(questao)) {
+		return false;
+		}
+		
+		else {
+			return true;
+		}
 	}
 
 	private Boolean verificaResposta(Map<String, Boolean> mapAlternativas, String resposta) {
