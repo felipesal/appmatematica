@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.felipesalles.appmatematica.domain.Questao;
+import com.felipesalles.appmatematica.domain.RespostaQuestao;
 import com.felipesalles.appmatematica.domain.dto.QuestaoDTO;
 import com.felipesalles.appmatematica.domain.dto.QuestaoNewDTO;
 import com.felipesalles.appmatematica.services.QuestaoService;
@@ -42,11 +43,11 @@ public class QuestaoResources {
 	public Questao insert(@RequestBody QuestaoNewDTO novaQuestao) {
 		
 		return qservice.insert(novaQuestao);
-	}
+	} 
 	
 	@PostMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public String responder(@PathVariable Integer id, @RequestBody String resposta) {
+	public String responder(@PathVariable Integer id, @RequestBody RespostaQuestao resposta) {
 		
 		return qservice.responder(id, resposta);
 	}

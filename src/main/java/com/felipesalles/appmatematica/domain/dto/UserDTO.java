@@ -11,14 +11,14 @@ public class UserDTO implements Serializable{
 
 	private String nome;
 	
-	private String email;
+	private Integer pontuacao;
 	
 
 	public UserDTO(User user) {
 		super();
 		this.id = user.getId();
 		this.nome = user.getNome();
-		this.email = user.getEmail();
+		this.pontuacao = user.getPontuacao();
 	}
 
 	public Integer getId() {
@@ -37,14 +37,12 @@ public class UserDTO implements Serializable{
 		this.nome = nome;
 	}
 
-	public String getEmail() {
-		return email;
+	public Integer getPontuacao() {
+		return pontuacao;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setPontuacao(Integer pontuacao) {
+		this.pontuacao = pontuacao;
 	}
-	
-	
 	
 }

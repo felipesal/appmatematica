@@ -76,7 +76,7 @@ public class UserServiceTest {
 					.isInstanceOf(ObjectNotFoundException.class)
 					.hasMessage("Objeto não encontrado");
 	}
-	
+/*	
 	@Test
 	@DisplayName("Deve retornar todos os users cadastrados")
 	public void findAllTest() {
@@ -93,7 +93,7 @@ public class UserServiceTest {
 		assertThat(usersDto.size()).isEqualTo(users.stream().map(x -> new UserDTO(x)).collect(Collectors.toList()).size());
 		
 	}
-	
+	*/
 	@Test
 	@DisplayName("Deve salvar um livro com sucesso")
 	public void saveUserTest() {
