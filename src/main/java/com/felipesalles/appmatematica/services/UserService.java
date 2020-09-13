@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.felipesalles.appmatematica.domain.User;
@@ -19,7 +20,9 @@ import com.felipesalles.appmatematica.services.exceptions.ObjectNotFoundExceptio
 
 @Service
 public class UserService {
-
+	
+	@Autowired
+	private BCryptPasswordEncoder pe;
 	
 	private UserRepository repo;
 	
@@ -27,6 +30,7 @@ public class UserService {
 	public UserService(UserRepository repo) {
 		super();
 		this.repo = repo;
+		
 	}
 
 	public Page<User> findAll(Integer page, Integer linesPerPage, String orderBy, String direction) {
@@ -87,7 +91,7 @@ public class UserService {
 
 	public User fromDto(UserNewDTO userDto) {
 
-		return new User(null, userDto.getNome(), userDto.getEmail(), userDto.getUsername(), userDto.getSenha(), 0);
+		return new User(null, userDto.getNome(), userDto.getEmail(), userDto.getUsername(), pe.encode(userDto.getSenha()), 0);
 
 	}
 
