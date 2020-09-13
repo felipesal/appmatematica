@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.felipesalles.appmatematica.domain.Questao;
 import com.felipesalles.appmatematica.domain.User;
+import com.felipesalles.appmatematica.domain.enums.Perfil;
 import com.felipesalles.appmatematica.repositories.QuestaoRepository;
 import com.felipesalles.appmatematica.repositories.UserRepository;
 
@@ -36,6 +37,7 @@ public class AppMatematicaApplication implements CommandLineRunner{
 		
 		User u1 = new User(1, "Ana", "ana@gmail.com", "aninha", pe.encode("123abc"), 0);
 		User u2 = new User(2, "Bruno", "bruno@gmail.com", "brunin", pe.encode("123abc"), 0);
+		u2.addPerfil(Perfil.ADMIN);
 		
 		users.saveAll(Arrays.asList(u1, u2));
 		

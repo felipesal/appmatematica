@@ -3,15 +3,18 @@ package com.felipesalles.appmatematica.domain;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.felipesalles.appmatematica.domain.enums.Perfil;
 
 @Entity
 public class User implements Serializable{
@@ -34,13 +37,17 @@ public class User implements Serializable{
 	
 	private Integer pontuacao;
 	
+	 @ElementCollection(fetch=FetchType.EAGER)
+	 @CollectionTable(name = "PERFIS")
+	 private Set<Integer> perfis = new HashSet<>();
+	
 	@ElementCollection
 	@CollectionTable(name="QUESTOES_CORRETAS")
 	private Set<Questao> questoesCorretas = new HashSet<>();
 	
 
 	public User() {
-		
+		addPerfil(Perfil.CLIENTE);
 	}
 	
 	
@@ -53,6 +60,7 @@ public class User implements Serializable{
 		this.username = username;
 		this.senha = senha;
 		this.pontuacao = pontuacao;
+		addPerfil(Perfil.CLIENTE);
 	}
 
 
@@ -105,7 +113,13 @@ public class User implements Serializable{
 		this.pontuacao = pontuacao;
 	}
 	
+	public Set<Perfil> getPerfis(){
+		return perfis.stream().map(obj -> Perfil.toEnum(obj)).collect(Collectors.toSet());
+	}
 	
+	public void addPerfil(Perfil perfil) {
+		perfis.add(perfil.getCod());
+	}
 
 	public Set<Questao> getQuestoesCorretas() {
 		return questoesCorretas;
