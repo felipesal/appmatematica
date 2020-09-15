@@ -49,7 +49,9 @@ public class QuestaoResources {
 	
 	@PostMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public String responder(@PathVariable Integer id, @RequestBody RespostaQuestao resposta) {
+	public String responder(@PathVariable Integer id, @RequestBody String resposta) {
+		
+		
 		
 		return qservice.responder(id, resposta);
 	}
