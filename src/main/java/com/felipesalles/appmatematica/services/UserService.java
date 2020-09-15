@@ -1,20 +1,21 @@
 package com.felipesalles.appmatematica.services;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.felipesalles.appmatematica.domain.User;
-import com.felipesalles.appmatematica.domain.dto.UserDTO;
 import com.felipesalles.appmatematica.domain.dto.UserNewDTO;
+import com.felipesalles.appmatematica.domain.enums.Perfil;
 import com.felipesalles.appmatematica.repositories.UserRepository;
+import com.felipesalles.appmatematica.security.UserSS;
+import com.felipesalles.appmatematica.services.exceptions.AuthorizationException;
 import com.felipesalles.appmatematica.services.exceptions.BusinessException;
 import com.felipesalles.appmatematica.services.exceptions.ObjectNotFoundException;
 
@@ -42,6 +43,12 @@ public class UserService {
 	}
 
 	public Optional<User> findOne(Integer id) {
+		
+		UserSS loggedUser = authenticated();
+		
+		if(loggedUser == null || !loggedUser.hasRole(Perfil.ADMIN) && !id.equals(loggedUser.getId()) ) {
+			throw new AuthorizationException("Acesso negado");
+		}
 
 		 Optional<User> obj =repo.findById(id);
 		 
@@ -79,6 +86,8 @@ public class UserService {
 
 		return repo.save(newUser);
 	}
+	
+	
 
 	public void updateInfo(User user, User newUser) {
 
@@ -93,6 +102,16 @@ public class UserService {
 
 		return new User(null, userDto.getNome(), userDto.getEmail(), userDto.getUsername(), pe.encode(userDto.getSenha()), 0);
 
+	}
+	
+	//retorna user logado
+	public static UserSS authenticated() {
+		try {
+		return (UserSS) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		}
+		catch (Exception e) {
+			return null;
+		}
 	}
 
 }
