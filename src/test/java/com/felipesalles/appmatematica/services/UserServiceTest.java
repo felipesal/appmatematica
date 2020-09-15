@@ -93,7 +93,7 @@ public class UserServiceTest {
 		assertThat(usersDto.size()).isEqualTo(users.stream().map(x -> new UserDTO(x)).collect(Collectors.toList()).size());
 		
 	}
-	*/
+	
 	@Test
 	@DisplayName("Deve salvar um livro com sucesso")
 	public void saveUserTest() {
@@ -107,7 +107,7 @@ public class UserServiceTest {
 		assertThat(user.getEmail()).isEqualTo(EMAIL);
 		assertThat(user.getUsername()).isEqualTo(USERNAME);
 	}
-	
+	*/
 	@Test
 	@DisplayName("Deve lançar erro de regra de negócio ao tentar cadastrar user com username existente")
 	public void notDuplicatedUsernameTest() {

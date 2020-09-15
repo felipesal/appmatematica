@@ -160,6 +160,13 @@ public class User implements Serializable{
 			return false;
 		return true;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "User [nome=" + nome + ", email=" + email + ", username=" + username + "]";
+	}
 	
 	
 	

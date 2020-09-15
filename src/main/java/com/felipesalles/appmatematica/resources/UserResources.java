@@ -62,9 +62,9 @@ public class UserResources {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public User insert(@RequestBody @Valid UserNewDTO userDto) {
+	public void insert(@RequestBody @Valid UserNewDTO userDto) {
 		
-		return serv.insert(userDto);
+		serv.insert(userDto);
 	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")

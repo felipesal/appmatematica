@@ -25,6 +25,9 @@ public class UserService {
 	@Autowired
 	private BCryptPasswordEncoder pe;
 	
+	@Autowired
+	private EmailService emailService;
+	
 	private UserRepository repo;
 	
 	@Autowired
@@ -55,7 +58,7 @@ public class UserService {
 		 return Optional.of(obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado")));
 	}
 
-	public User insert(UserNewDTO userDto) {
+	public void insert(UserNewDTO userDto) {
 
 		User user = fromDto(userDto);
 
@@ -67,7 +70,9 @@ public class UserService {
 			throw new BusinessException("Email já cadastrado");
 		}
 		else {
-			return user = repo.save(user);
+			
+			user = repo.save(user);
+			emailService.enviaEmailDeConfirmacaoComHtml(user);
 		}
 
 	}
