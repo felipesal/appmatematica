@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +37,7 @@ public class UserResources {
 		this.serv = serv;
 	}
 
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
 	public Page<UserDTO> listarTodos(
@@ -65,6 +67,7 @@ public class UserResources {
 		return serv.insert(userDto);
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Integer id) {
